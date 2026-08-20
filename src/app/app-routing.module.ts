@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'digital-literacy',
+    loadChildren: () => import('./digital-literacy/digital-literacy.module').then( m => m.DigitalLiteracyPageModule)
   }
 ];
 @NgModule({
