@@ -1,5 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="primary">
+    <ion-button>
+      <i class="fa-solid fa-user"></i>
+    </ion-button>
+    </ion-buttons>
     <ion-title>
       Home
     </ion-title>
@@ -13,5 +18,56 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Home page"></app-explore-container>
+  <!-- <app-explore-container name="Home page"></app-explore-container> -->
+
+
+  <ion-row>
+    <div class="card-container">
+      <div class="card">
+        <div class="card-title">
+          <h1>Digital Literacy</h1>
+        </div>
+        <div class="card-description">
+          <h3>Description</h3>
+          <p>Learn the fundamentals of digital literacy and how to use technology effectively.</p>
+          <div class="card-button">
+            <ion-button color="primary" href="/digital-literacy">More</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-row>
+  <ion-row>
+    <div class="card-container">
+      <div class="card">
+        <div class="card-title">
+          <h1>Transport</h1>
+        </div>
+        <div class="card-description">
+          <h3>Description</h3>
+          <p>Find information about transportation options and services.</p>
+          <div class="card-button">
+            <ion-button color="primary" href="/transport">More</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-row>
+  <ion-row>
+    <div class="card-container">
+      <div class="card">
+        <div class="card-title">
+          <h1>Bursary & Education</h1>
+        </div>
+        <div class="card-description">
+          <h3>Description</h3>
+          <p>Find information about bursary opportunities and educational resources.</p>
+          <div class="card-button">
+            <ion-button color="primary" href="/bursary-education">More</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-row>
+
 </ion-content>
