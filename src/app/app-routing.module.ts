@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'digital-literacy',
     loadChildren: () => import('./digital-literacy/digital-literacy.module').then( m => m.DigitalLiteracyPageModule)
+  },
+  {
+    path: 'transport',
+    loadChildren: () => import('./transport/transport.module').then( m => m.TransportPageModule)
   }
 ];
 @NgModule({
