@@ -6,18 +6,6 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
-  {
-    path: 'digital-literacy',
-    loadChildren: () => import('./digital-literacy/digital-literacy.module').then( m => m.DigitalLiteracyPageModule)
-  },
-  {
-    path: 'transport',
-    loadChildren: () => import('./transport/transport.module').then( m => m.TransportPageModule)
-  },
-  {
-    path: 'bursary-education',
-    loadChildren: () => import('./bursary-education/bursary-education.module').then( m => m.BursaryEducationPageModule)
-  }
 ];
 @NgModule({
   imports: [

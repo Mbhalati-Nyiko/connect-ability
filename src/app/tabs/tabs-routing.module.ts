@@ -20,17 +20,30 @@ const routes: Routes = [
         loadChildren: () => import('../more/more.module').then(m => m.MorePageModule)
       },
       {
+    path: '',
+    redirectTo: '/tabs/home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'digital-literacy',
+    loadChildren: () => import('./digital-literacy/digital-literacy.module').then( m => m.DigitalLiteracyPageModule)
+  },
+  {
+    path: 'transportation',
+    loadChildren: () => import('./transportation/transportation.module').then( m => m.TransportationPageModule)
+  },
+  {
+    path: 'bursary-education',
+    loadChildren: () => import('./bursary-education/bursary-education.module').then( m => m.BursaryEducationPageModule)
+  },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
       }
     ]
   },
-  {
-    path: '',
-    redirectTo: '/tabs/home',
-    pathMatch: 'full'
-  }
+  
 ];
 
 @NgModule({
