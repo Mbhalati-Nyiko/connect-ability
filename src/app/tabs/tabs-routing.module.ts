@@ -20,6 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('../more/more.module').then(m => m.MorePageModule)
       },
       {
+<<<<<<< HEAD
     path: '',
     redirectTo: '/tabs/home',
     pathMatch: 'full'
@@ -36,6 +37,19 @@ const routes: Routes = [
     path: 'bursary-education',
     loadChildren: () => import('./bursary-education/bursary-education.module').then( m => m.BursaryEducationPageModule)
   },
+=======
+        path: 'digital-literacy',
+        loadChildren: () => import('./tabs/digital-literacy.module').then( m => m.DigitalLiteracyPageModule)
+      },
+      {
+        path: 'transport',
+        loadChildren: () => import('./tabs/transport.module').then( m => m.TransportPageModule)
+      },
+      {
+        path: 'bursary-education',
+        loadChildren: () => import('./tabs/bursary-education.module').then( m => m.BursaryEducationPageModule)
+      },
+>>>>>>> 73c7833 (Update page routing.)
       {
         path: '',
         redirectTo: '/tabs/home',
