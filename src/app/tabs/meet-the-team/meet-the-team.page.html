@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Meet the Team</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="team-container">
+    <h2>Our Team</h2>
+    <p class="team-description">Dedicated to empowering young learners</p>
+
+    <div class="team-grid">
+      <div class="team-member" *ngFor="let member of teamMembers">
+        <div class="member-avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <h3>{{ member.name }}</h3>
+        <p>{{ member.role }}</p>
+        <p class="member-bio">{{ member.bio }}</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
