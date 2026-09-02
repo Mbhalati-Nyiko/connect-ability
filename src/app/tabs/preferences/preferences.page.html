@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Preferences</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="preferences-container">
+    <h2>App Settings</h2>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Notifications</ion-label>
+        <ion-toggle [(ngModel)]="preferences.notifications" (ionChange)="savePreferences()"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Dark Mode</ion-label>
+        <ion-toggle [(ngModel)]="preferences.darkMode" (ionChange)="savePreferences()"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Data Saver</ion-label>
+        <ion-toggle [(ngModel)]="preferences.dataSaver" (ionChange)="savePreferences()"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Language</ion-label>
+        <ion-select [(ngModel)]="preferences.language" (ionChange)="savePreferences()">
+          <ion-select-option value="en">English</ion-select-option>
+          <ion-select-option value="zu">Zulu</ion-select-option>
+          <ion-select-option value="xh">Xhosa</ion-select-option>
+          <ion-select-option value="af">Afrikaans</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Content Language</ion-label>
+        <ion-select [(ngModel)]="preferences.contentLanguage" (ionChange)="savePreferences()">
+          <ion-select-option value="en">English</ion-select-option>
+          <ion-select-option value="zu">Zulu</ion-select-option>
+          <ion-select-option value="xh">Xhosa</ion-select-option>
+          <ion-select-option value="af">Afrikaans</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
