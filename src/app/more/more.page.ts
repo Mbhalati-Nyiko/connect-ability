@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'more',
@@ -6,8 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['more.page.scss'],
   standalone: false,
 })
-export class MorePage {
+export class MorePage implements OnInit {
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
+  ngOnInit() {}
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

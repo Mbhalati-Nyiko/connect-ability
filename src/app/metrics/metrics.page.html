@@ -13,5 +13,59 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Metrics page"></app-explore-container>
+  <div class="metrics-container">
+    <div class="metrics-summary">
+      <h2>Academic Performance</h2>
+      <div class="overall-average">
+        <span class="average-score">72%</span>
+        <span class="average-label">Overall Average</span>
+      </div>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Grade Analysis</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="subjects-list">
+          <ion-item *ngFor="let subject of subjects">
+            <ion-label>
+              <h3>{{ subject.name }}</h3>
+              <p>{{ subject.term }} - Term</p>
+            </ion-label>
+            <div class="subject-performance">
+              <span class="subject-grade" [ngClass]="getGradeClass(subject.grade)">
+                {{ subject.grade }}%
+              </span>
+              <div class="performance-bar">
+                <div class="bar-fill" [style.width]="subject.grade + '%'"></div>
+              </div>
+            </div>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Bursary Applications</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="bursary-stats">
+          <div class="stat-item">
+            <span class="stat-value">5</span>
+            <span class="stat-label">Total Applied</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">3</span>
+            <span class="stat-label">Pending</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">2</span>
+            <span class="stat-label">Approved</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

@@ -1,0 +1,110 @@
+.metrics-container {
+  padding: 15px;
+}
+
+.metrics-summary {
+  text-align: center;
+  margin-bottom: 20px;
+  
+  h2 {
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .overall-average {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .average-score {
+      font-size: 48px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    
+    .average-label {
+      font-size: 16px;
+      color: #666;
+    }
+  }
+}
+
+.subjects-list {
+  ion-item {
+    margin-bottom: 10px;
+    
+    h3 {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    p {
+      color: #666;
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+}
+
+.subject-performance {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100px;
+  
+  .subject-grade {
+    font-weight: bold;
+    margin-bottom: 5px;
+    
+    &.grade-excellent {
+      color: #4CAF50;
+    }
+    
+    &.grade-good {
+      color: #2196F3;
+    }
+    
+    &.grade-average {
+      color: #FF9800;
+    }
+    
+    &.grade-poor {
+      color: #F44336;
+    }
+  }
+  
+  .performance-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2196F3, #4CAF50);
+      border-radius: 4px;
+      transition: width 0.5s;
+    }
+  }
+}
+
+.bursary-stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  
+  .stat-item {
+    .stat-value {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+    }
+  }
+}

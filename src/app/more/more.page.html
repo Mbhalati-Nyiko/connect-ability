@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      More
-    </ion-title>
+    <ion-title>More</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,5 +11,42 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="More page"></app-explore-container>
+  <div class="more-container">
+    <ion-list>
+      <ion-item button routerLink="/tabs/meet-the-team">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Meet the Team</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button routerLink="/tabs/faq">
+        <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+        <ion-label>FAQ</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button routerLink="/tabs/preferences">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label>Preferences & Settings</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button routerLink="/tabs/profile">
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        <ion-label>Profile</ion-label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <ion-label>Logout</ion-label>
+        <!-- <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> -->
+      </ion-item>
+    </ion-list>
+
+    <div class="version-info">
+      <p>LearnConnect v1.0.0</p>
+    </div>
+
+  </div>
 </ion-content>

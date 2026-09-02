@@ -1,13 +1,91 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>transportation</ion-title>
+    <ion-title>Transport</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">transportation</ion-title>
+      <ion-title size="large">Transport Information</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="transport-container">
+    <div class="transport-tabs">
+      <div class="tab-header">
+        <button class="tab-button" [class.active]="currentTab === 'routes'" (click)="switchTab('routes')">
+          My Routes
+        </button>
+        <button class="tab-button" [class.active]="currentTab === 'track'" (click)="switchTab('track')">
+          Track Taxi
+        </button>
+        <button class="tab-button" [class.active]="currentTab === 'save'" (click)="switchTab('save')">
+          Save Route
+        </button>
+      </div>
+
+      <!-- Routes Tab -->
+      <div class="tab-content" *ngIf="currentTab === 'routes'">
+        <ion-card *ngFor="let route of savedRoutes">
+          <ion-card-header>
+            <ion-card-title>{{ route.routeName }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="route-info">
+              <p><strong>From:</strong> {{ route.from }}</p>
+              <p><strong>To:</strong> {{ route.to }}</p>
+              <p><strong>Fare:</strong> R{{ route.fare }}</p>
+              <p><strong>Duration:</strong> {{ route.duration }} minutes</p>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Track Tab -->
+      <div class="tab-content" *ngIf="currentTab === 'track'">
+        <div class="track-info">
+          <h3>Track Your Taxi</h3>
+          <div class="search-bar">
+            <ion-input placeholder="Enter taxi route number" [(ngModel)]="trackingRoute"></ion-input>
+            <ion-button size="small" (click)="trackTaxi()">Track</ion-button>
+          </div>
+          <div class="tracking-status" *ngIf="isTracking">
+            <div class="taxi-status">
+              <i class="fa-solid fa-taxi"></i>
+              <p>Status: <strong>{{ taxiStatus }}</strong></p>
+              <p>ETA: <strong>{{ taxiEta }}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Route Tab -->
+      <div class="tab-content" *ngIf="currentTab === 'save'">
+        <form (ngSubmit)="saveRoute()">
+          <ion-item>
+            <ion-label position="floating">Route Name</ion-label>
+            <ion-input [(ngModel)]="newRoute.routeName" name="routeName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">From</ion-label>
+            <ion-input [(ngModel)]="newRoute.from" name="from"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">To</ion-label>
+            <ion-input [(ngModel)]="newRoute.to" name="to"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Fare (R)</ion-label>
+            <ion-input type="number" [(ngModel)]="newRoute.fare" name="fare"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Duration (minutes)</ion-label>
+            <ion-input type="number" [(ngModel)]="newRoute.duration" name="duration"></ion-input>
+          </ion-item>
+          <ion-button type="submit" expand="block">Save Route</ion-button>
+        </form>
+      </div>
+    </div>
+  </div>
 </ion-content>
