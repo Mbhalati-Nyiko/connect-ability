@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>FAQ</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-accordion-group>
+    <ion-accordion *ngFor="let faq of faqs">
+      <ion-item slot="header">
+        <ion-label>{{ faq.question }}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <p>{{ faq.answer }}</p>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>
