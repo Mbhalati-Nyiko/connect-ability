@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Metrics
+      Academic Planner
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,63 +9,259 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Metrics</ion-title>
+      <ion-title size="large">Academic Planner</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div class="metrics-container">
-    <div class="metrics-summary">
-      <h2>Academic Performance</h2>
-      <div class="overall-average">
-        <span class="average-score">72%</span>
-        <span class="average-label">Overall Average</span>
+    <!-- Step 1: Subject Entry -->
+    <div *ngIf="currentStep === 1" class="form-step">
+      <h2>Step 1: Enter Your Subjects & Marks</h2>
+      <p class="step-description">Add all the subjects you're currently taking and your marks for each.</p>
+
+      <div class="subject-input-section">
+        <ion-item>
+          <ion-input
+            [(ngModel)]="newSubjectName"
+            placeholder="Subject name (e.g., Mathematics)"
+            label="Subject"
+            labelPlacement="floating"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            [(ngModel)]="newSubjectMark"
+            type="number"
+            placeholder="Mark (%)"
+            label="Mark"
+            labelPlacement="floating"
+            min="0"
+            max="100"
+          ></ion-input>
+        </ion-item>
+
+        <ion-button
+          expand="block"
+          (click)="addSubject()"
+          [disabled]="!newSubjectName || !newSubjectMark"
+        >
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Add Subject
+        </ion-button>
+      </div>
+
+      <div class="subjects-added" *ngIf="subjects.length > 0">
+        <h3>Your Subjects ({{ subjects.length }})</h3>
+        <div class="subject-list">
+          <ion-item *ngFor="let subject of subjects; let i = index" class="subject-item">
+            <ion-label>
+              <h3>{{ subject.name }}</h3>
+              <p>Mark: {{ subject.grade }}%</p>
+            </ion-label>
+            <ion-button
+              fill="clear"
+              color="danger"
+              (click)="removeSubject(i)"
+              slot="end"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </div>
+
+        <ion-button
+          expand="block"
+          color="success"
+          (click)="nextStep()"
+          [disabled]="subjects.length < 3"
+        >
+          Continue to Courses
+          <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+        <p *ngIf="subjects.length < 3" class="hint-text">
+          Please add at least 3 subjects to continue.
+        </p>
       </div>
     </div>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Grade Analysis</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="subjects-list">
-          <ion-item *ngFor="let subject of subjects">
+    <!-- Step 2: Course Selection -->
+    <div *ngIf="currentStep === 2" class="form-step">
+      <h2>Step 2: Select Your Courses</h2>
+      <p class="step-description">Choose the faculty and courses you're interested in studying.</p>
+
+      <ion-item>
+        <ion-label>Faculty</ion-label>
+        <ion-select
+          [(ngModel)]="selectedFaculty"
+          placeholder="Select a faculty"
+          (ionChange)="onFacultyChange()"
+        >
+          <ion-select-option *ngFor="let faculty of faculties" [value]="faculty.name">
+            {{ faculty.name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="selectedFaculty" class="courses-section">
+        <h3>Available Courses in {{ selectedFaculty }}</h3>
+        <div class="courses-grid">
+          <ion-item
+            *ngFor="let course of getCoursesForFaculty(selectedFaculty)"
+            class="course-item"
+          >
+            <ion-checkbox
+              [(ngModel)]="course.selected"
+              slot="start"
+            ></ion-checkbox>
             <ion-label>
-              <h3>{{ subject.name }}</h3>
-              <p>{{ subject.term }} - Term</p>
+              <h3>{{ course.name }}</h3>
+              <p>{{ course.description }}</p>
+              <p class="requirements">Requirements: {{ course.requirements }}</p>
             </ion-label>
-            <div class="subject-performance">
-              <span class="subject-grade" [ngClass]="getGradeClass(subject.grade)">
-                {{ subject.grade }}%
-              </span>
-              <div class="performance-bar">
-                <div class="bar-fill" [style.width]="subject.grade + '%'"></div>
-              </div>
-            </div>
           </ion-item>
         </div>
-      </ion-card-content>
-    </ion-card>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Bursary Applications</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div class="bursary-stats">
-          <div class="stat-item">
-            <span class="stat-value">5</span>
-            <span class="stat-label">Total Applied</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">3</span>
-            <span class="stat-label">Pending</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">2</span>
-            <span class="stat-label">Approved</span>
-          </div>
+        <div class="navigation-buttons">
+          <ion-button
+            expand="block"
+            color="secondary"
+            (click)="previousStep()"
+          >
+            <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+            Back to Subjects
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            color="success"
+            (click)="completeForm()"
+            [disabled]="!hasSelectedCourses()"
+          >
+            View Results
+            <ion-icon name="analytics-outline" slot="end"></ion-icon>
+          </ion-button>
         </div>
-      </ion-card-content>
-    </ion-card>
+        <p *ngIf="!hasSelectedCourses()" class="hint-text">
+          Please select at least one course to continue.
+        </p>
+      </div>
+    </div>
+
+    <!-- Results View -->
+    <div *ngIf="currentStep === 3" class="results-view">
+      <ion-button
+        expand="block"
+        color="secondary"
+        (click)="resetForm()"
+        class="reset-button"
+      >
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        Start Over
+      </ion-button>
+
+      <!-- Summary -->
+      <div class="metrics-summary">
+        <h2>Academic Performance</h2>
+        <div class="overall-average">
+          <span class="average-score">{{ getOverallAverage() }}%</span>
+          <span class="average-label">Overall Average</span>
+        </div>
+      </div>
+
+      <!-- Grade Analysis -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Grade Analysis</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="subjects-list">
+            <ion-item *ngFor="let subject of subjects">
+              <ion-label>
+                <h3>{{ subject.name }}</h3>
+                <p>{{ subject.term || 'Current' }} - Term</p>
+              </ion-label>
+              <div class="subject-performance">
+                <span class="subject-grade" [ngClass]="getGradeClass(subject.grade)">
+                  {{ subject.grade }}%
+                </span>
+                <div class="performance-bar">
+                  <div class="bar-fill" [style.width]="subject.grade + '%'"></div>
+                </div>
+              </div>
+            </ion-item>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Bursary Information -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Bursary Applications</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="bursary-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{ getBursaryEligibility().total }}</span>
+              <span class="stat-label">Total Available</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getBursaryEligibility().eligible }}</span>
+              <span class="stat-label">You Qualify For</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getBursaryEligibility().pending }}</span>
+              <span class="stat-label">To Apply For</span>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Qualified Courses -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Courses You Qualify For</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="getQualifiedCourses().length > 0" class="qualified-courses">
+            <div
+              *ngFor="let course of getQualifiedCourses()"
+              class="course-qualified"
+            >
+              <ion-item>
+                <ion-icon name="checkmark-circle" color="success" slot="start"></ion-icon>
+                <ion-label>
+                  <h3>{{ course.name }}</h3>
+                  <p>{{ course.description }}</p>
+                  <p class="requirement-match">
+                    Requirements: {{ course.requirements }}
+                  </p>
+                </ion-label>
+              </ion-item>
+            </div>
+          </div>
+          <div *ngIf="getQualifiedCourses().length === 0" class="no-qualifications">
+            <ion-icon name="sad-outline" size="large"></ion-icon>
+            <p>Based on your marks, you don't qualify for any of your selected courses yet.</p>
+            <p>Don't give up! Consider improvement strategies or explore alternative courses.</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Improvement Suggestions -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>📚 How to Improve</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="improvement-tips">
+            <div *ngFor="let tip of getImprovementTips()" class="tip-item">
+              <ion-icon name="bulb-outline" color="warning"></ion-icon>
+              <span>{{ tip }}</span>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
