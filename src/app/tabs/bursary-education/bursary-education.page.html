@@ -11,35 +11,275 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="tertiary-information-container">
-    <div class="tertiary-information-card">
-      <div class="tertiary-information-title-card">
-        <h2 class="tertiary-information-title">Tertiary Information</h2>
+  <div class="main-container">
+    <!-- Tertiary Information Section -->
+    <div class="section-container tertiary-section">
+      <div class="section-header">
+        <ion-icon name="school-outline" class="section-icon"></ion-icon>
+        <h2>Tertiary Information</h2>
       </div>
-      <div class="tertiary-information-card-options">
-        <div class="university-card">
-          <p>University</p>
+
+      <div class="button-grid">
+        <ion-button
+          expand="block"
+          class="option-button university-btn"
+          [class.active]="activeSection === 'tertiary-university'"
+          (click)="toggleSection('tertiary-university')"
+        >
+          <ion-icon name="business-outline" slot="start"></ion-icon>
+          Universities
+          <ion-icon
+            [name]="activeSection === 'tertiary-university' ? 'chevron-up-outline' : 'chevron-down-outline'"
+            slot="end"
+          ></ion-icon>
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          class="option-button college-btn"
+          [class.active]="activeSection === 'tertiary-college'"
+          (click)="toggleSection('tertiary-college')"
+        >
+          <ion-icon name="library-outline" slot="start"></ion-icon>
+          Colleges
+          <ion-icon
+            [name]="activeSection === 'tertiary-college' ? 'chevron-up-outline' : 'chevron-down-outline'"
+            slot="end"
+          ></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- University List -->
+      <div *ngIf="activeSection === 'tertiary-university'" class="info-list">
+        <div *ngFor="let uni of universities" class="info-card">
+          <div class="card-header">
+            <h3>{{ uni.name }}</h3>
+            <span class="badge" [ngClass]="uni.type">{{ uni.type }}</span>
+          </div>
+          <p class="location"><ion-icon name="location-outline"></ion-icon> {{ uni.location }}</p>
+          <p class="description">{{ uni.description }}</p>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Established:</span>
+              <span class="detail-value">{{ uni.established }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Students:</span>
+              <span class="detail-value">{{ uni.students }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Programs:</span>
+              <span class="detail-value">{{ uni.programs }}</span>
+            </div>
+          </div>
+          <div class="faculties">
+            <span class="faculty-tag" *ngFor="let faculty of uni.faculties">
+              {{ faculty }}
+            </span>
+          </div>
+          <ion-button
+            expand="block"
+            fill="outline"
+            size="small"
+            class="learn-more-btn"
+            (click)="openWebsite(uni.website)"
+          >
+            <ion-icon name="globe-outline" slot="start"></ion-icon>
+            Visit Website
+          </ion-button>
         </div>
-        <div class="college-card">
-          <p>College</p>
+      </div>
+
+      <!-- College List -->
+      <div *ngIf="activeSection === 'tertiary-college'" class="info-list">
+        <div *ngFor="let college of colleges" class="info-card">
+          <div class="card-header">
+            <h3>{{ college.name }}</h3>
+            <span class="badge" [ngClass]="college.type">{{ college.type }}</span>
+          </div>
+          <p class="location"><ion-icon name="location-outline"></ion-icon> {{ college.location }}</p>
+          <p class="description">{{ college.description }}</p>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Established:</span>
+              <span class="detail-value">{{ college.established }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Programs:</span>
+              <span class="detail-value">{{ college.programs }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Duration:</span>
+              <span class="detail-value">{{ college.duration }}</span>
+            </div>
+          </div>
+          <div class="courses-offered">
+            <span class="course-tag" *ngFor="let course of college.courses">
+              {{ course }}
+            </span>
+          </div>
+          <ion-button
+            expand="block"
+            fill="outline"
+            size="small"
+            class="learn-more-btn"
+            (click)="openWebsite(college.website)"
+          >
+            <ion-icon name="globe-outline" slot="start"></ion-icon>
+            Visit Website
+          </ion-button>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="bursary-information-container">
-    <div class="bursary-information-card">
-      <div class="bursary-information-title-card">
-        <h2 class="bursary-information-title">Bursary Information</h2>
+    <!-- Bursary Information Section -->
+    <div class="section-container bursary-section">
+      <div class="section-header">
+        <ion-icon name="cash-outline" class="section-icon"></ion-icon>
+        <h2>Bursary Information</h2>
       </div>
-      <div class="bursary-information-card-options">
-        <div class="university-card">
-          <p>University</p>
-        </div>
-        <div class="college-card">
-          <p>College</p>
+
+      <div class="button-grid">
+        <ion-button
+          expand="block"
+          class="option-button bursary-uni-btn"
+          [class.active]="activeSection === 'bursary-university'"
+          (click)="toggleSection('bursary-university')"
+        >
+          <ion-icon name="business-outline" slot="start"></ion-icon>
+          University Bursaries
+          <ion-icon
+            [name]="activeSection === 'bursary-university' ? 'chevron-up-outline' : 'chevron-down-outline'"
+            slot="end"
+          ></ion-icon>
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          class="option-button bursary-college-btn"
+          [class.active]="activeSection === 'bursary-college'"
+          (click)="toggleSection('bursary-college')"
+        >
+          <ion-icon name="library-outline" slot="start"></ion-icon>
+          College Bursaries
+          <ion-icon
+            [name]="activeSection === 'bursary-college' ? 'chevron-up-outline' : 'chevron-down-outline'"
+            slot="end"
+          ></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- University Bursaries -->
+      <div *ngIf="activeSection === 'bursary-university'" class="info-list">
+        <div *ngFor="let bursary of universityBursaries" class="info-card bursary-card">
+          <div class="card-header">
+            <h3>{{ bursary.name }}</h3>
+            <span class="badge" [ngClass]="bursary.status">{{ bursary.status }}</span>
+          </div>
+          <p class="provider"><ion-icon name="business-outline"></ion-icon> {{ bursary.provider }}</p>
+          <p class="description">{{ bursary.description }}</p>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Amount:</span>
+              <span class="detail-value amount">{{ bursary.amount }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Deadline:</span>
+              <span class="detail-value" [ngClass]="getDeadlineClass(bursary.deadline)">{{ bursary.deadline }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Fields:</span>
+              <span class="detail-value">{{ bursary.fields }}</span>
+            </div>
+          </div>
+          <div class="requirements">
+            <h4>Requirements:</h4>
+            <ul>
+              <li *ngFor="let req of bursary.requirements">{{ req }}</li>
+            </ul>
+          </div>
+          <ion-button
+            expand="block"
+            size="small"
+            class="apply-btn"
+            (click)="openWebsite(bursary.website)"
+          >
+            <ion-icon name="send-outline" slot="start"></ion-icon>
+            Apply Now
+          </ion-button>
         </div>
       </div>
+
+      <!-- College Bursaries -->
+      <div *ngIf="activeSection === 'bursary-college'" class="info-list">
+        <div *ngFor="let bursary of collegeBursaries" class="info-card bursary-card">
+          <div class="card-header">
+            <h3>{{ bursary.name }}</h3>
+            <span class="badge" [ngClass]="bursary.status">{{ bursary.status }}</span>
+          </div>
+          <p class="provider"><ion-icon name="business-outline"></ion-icon> {{ bursary.provider }}</p>
+          <p class="description">{{ bursary.description }}</p>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Amount:</span>
+              <span class="detail-value amount">{{ bursary.amount }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Deadline:</span>
+              <span class="detail-value" [ngClass]="getDeadlineClass(bursary.deadline)">{{ bursary.deadline }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Fields:</span>
+              <span class="detail-value">{{ bursary.fields }}</span>
+            </div>
+          </div>
+          <div class="requirements">
+            <h4>Requirements:</h4>
+            <ul>
+              <li *ngFor="let req of bursary.requirements">{{ req }}</li>
+            </ul>
+          </div>
+          <ion-button
+            expand="block"
+            size="small"
+            class="apply-btn"
+            (click)="openWebsite(bursary.website)"
+          >
+            <ion-icon name="send-outline" slot="start"></ion-icon>
+            Apply Now
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Tips Section -->
+    <div class="quick-tips">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="bulb-outline" color="warning"></ion-icon>
+            Quick Tips
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="tip-item">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <span>Apply early to increase your chances of securing funding</span>
+          </div>
+          <div class="tip-item">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <span>Check if you meet all requirements before applying</span>
+          </div>
+          <div class="tip-item">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <span>Keep copies of all your documents ready</span>
+          </div>
+          <div class="tip-item">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <span>Research multiple bursaries to maximize your chances</span>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
   </div>
 </ion-content>
